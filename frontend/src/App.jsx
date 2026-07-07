@@ -18,24 +18,28 @@ const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(Context);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          `https://hospital-management-system-gy1f.onrender.com/api/v1/user/patient/me`,
-          {
-            withCredentials: true,
-          }
-        );
-        setIsAuthenticated(true);
-        setUser(response.data.user);
-      } catch (error) {
-        setIsAuthenticated(false);
-        setUser({});
-      }
-    };
-    fetchUser();
-  }, [isAuthenticated]);
+ useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get(
+        `https://hospital-management-system-gy1f.onrender.com/api/v1/user/patient/me`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setIsAuthenticated(true);
+      setUser(response.data.user);
+
+    } catch (error) {
+      setIsAuthenticated(false);
+      setUser({});
+    }
+  };
+
+  fetchUser();
+
+}, []);
 
   return (
     <>
