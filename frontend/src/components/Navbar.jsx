@@ -9,6 +9,8 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
+  console.log("Navbar Auth:", isAuthenticated);
+  
   const handleLogout = async () => {
     await axios
       .get("https://hospital-management-system-gy1f.onrender.com/api/v1/user/patient/logout", {
