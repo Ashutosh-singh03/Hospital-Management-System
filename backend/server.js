@@ -6,7 +6,7 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
+console.log("JWT KEY:", process.env.JWT_SECRET_KEY);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
