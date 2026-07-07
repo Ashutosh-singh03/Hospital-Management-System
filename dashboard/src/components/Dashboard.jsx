@@ -7,22 +7,32 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 const Dashboard = () => {
+  const { isAuthenticated, admin } = useContext(Context);
   const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://hospital-management-system-gy1f.onrender.com/api/v1/appointment/getall",
-          { withCredentials: true }
-        );
-        setAppointments(data.appointments);
-      } catch (error) {
-        setAppointments([]);
-      }
-    };
-    fetchAppointments();
-  }, []);
+ useEffect(() => {
+
+  if (!isAuthenticated) {
+    return;
+  }
+
+  const fetchAppointments = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://hospital-management-system-gy1f.onrender.com/api/v1/appointment/getall",
+        { withCredentials: true }
+      );
+
+      setAppointments(data.appointments);
+
+    } catch (error) {
+      setAppointments([]);
+    }
+  };
+
+  fetchAppointments();
+
+}, [isAuthenticated]);
 
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
@@ -44,7 +54,7 @@ const Dashboard = () => {
     }
   };
 
-  const { isAuthenticated, admin } = useContext(Context);
+  
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
