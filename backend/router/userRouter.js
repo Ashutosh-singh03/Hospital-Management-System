@@ -18,6 +18,7 @@ const router = express.Router();
 
 router.post("/patient/register", patientRegister);
 router.post("/login", login);
+router.post("/admin/login", adminLogin);
 router.post("/admin/addnew", addNewAdmin);
 router.post("/doctor/addnew", isAdminAuthenticated, addNewDoctor);
 router.get("/doctors", getAllDoctors);
