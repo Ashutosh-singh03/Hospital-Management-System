@@ -3,6 +3,7 @@ import { User } from "../models/userSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
+import jwt from "jsonwebtoken";
 
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, phone, aadhar, dob, gender, password } =
@@ -57,6 +58,53 @@ export const login = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(`User Not Found With This Role!`, 400));
   }
   generateToken(user, "Login Successfully!", 201, res);
+});
+
+export const adminLogin = catchAsyncErrors(async (req,res,next)=>{
+
+  const {email,password} = req.body;
+
+  if(!email || !password){
+    return next(new ErrorHandler("Please Fill Full Form!",400));
+  }
+
+  const admin = await User.findOne({email}).select("+password");
+
+  if(!admin){
+    return next(new ErrorHandler("Invalid Email Or Password!",400));
+  }
+
+  const isPasswordMatch = await admin.comparePassword(password);
+
+  if(!isPasswordMatch){
+    return next(new ErrorHandler("Invalid Email Or Password!",400));
+  }
+
+  if(admin.role !== "Admin"){
+    return next(new ErrorHandler("Not An Admin Account!",400));
+  }
+
+
+  const token = jwt.sign(
+    {id: admin._id},
+    process.env.JWT_SECRET_KEY
+  );
+
+
+  res
+  .status(200)
+  .cookie("adminToken", token, {
+      httpOnly:true,
+      expires:new Date(
+        Date.now()+7*24*60*60*1000
+      ),
+  })
+  .json({
+      success:true,
+      message:"Admin Login Successfully",
+      admin
+  });
+
 });
 
 export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
