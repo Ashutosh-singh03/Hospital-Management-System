@@ -13,24 +13,32 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
-
+const navigateTo = useNavigate();
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
-  const handleLogout = async () => {
-    await axios
-      .get("https://hospital-management-system-gy1f.onrender.com/api/v1/user/admin/logout", {
+const handleLogout = async () => {
+  try {
+    const res = await axios.get(
+      "https://hospital-management-system-gy1f.onrender.com/api/v1/user/admin/logout",
+      {
         withCredentials: true,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setIsAuthenticated(false);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+      }
+    );
 
-  const navigateTo = useNavigate();
+    toast.success(res.data.message);
+
+    setIsAuthenticated(false);
+
+    navigateTo("/login");
+
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message || "Logout failed"
+    );
+  }
+};
+
+  
 
   const gotoHomePage = () => {
     navigateTo("/");
