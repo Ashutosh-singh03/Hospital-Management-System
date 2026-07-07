@@ -12,6 +12,15 @@ import appointmentRouter from "./router/appointmentRouter.js";
 const app = express();
 config();
 
+console.log(
+  "Frontend URL:",
+  process.env.FRONTEND_URL
+);
+
+console.log(
+  "Dashboard URL:",
+  process.env.DASHBOARD_URL
+);
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
