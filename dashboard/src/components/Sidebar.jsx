@@ -19,7 +19,7 @@ const navigateTo = useNavigate();
 const handleLogout = async () => {
   try {
     const res = await axios.get(
-      "https://hospital-management-system-gy1f.onrender.com/api/v1/user/admin/logout",
+      `${API_URL}/api/v1/user/admin/logout`,
       {
         withCredentials: true,
       }

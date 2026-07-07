@@ -19,7 +19,7 @@ const Dashboard = () => {
   const fetchAppointments = async () => {
     try {
       const { data } = await axios.get(
-        "https://hospital-management-system-gy1f.onrender.com/api/v1/appointment/getall",
+        `${API_URL}/api/v1/appointment/getall`,
         { withCredentials: true }
       );
 
@@ -37,7 +37,7 @@ const Dashboard = () => {
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
       const { data } = await axios.put(
-        `https://hospital-management-system-gy1f.onrender.com/api/v1/appointment/update/${appointmentId}`,
+        `${API_URL}/api/v1/appointment/update/${appointmentId}`,
         { status },
         { withCredentials: true }
       );
