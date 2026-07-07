@@ -5,6 +5,7 @@ import {
   getAllDoctors,
   getUserDetails,
   login,
+  adminLogin,
   logoutAdmin,
   logoutPatient,
   patientRegister,
