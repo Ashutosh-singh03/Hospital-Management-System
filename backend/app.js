@@ -15,7 +15,7 @@ config();
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-    method: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
