@@ -22,7 +22,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/api/v1/user/patient/me`,
+          `https://hospital-management-system-gy1f.onrender.com/api/v1/user/patient/me`,
           {
             withCredentials: true,
           }
