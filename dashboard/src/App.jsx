@@ -45,7 +45,12 @@ const App = () => {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+       <Route 
+ path="/" 
+ element={
+   isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
+ }
+/>
         <Route path="/login" element={<Login />} />
         <Route path="/doctor/addnew" element={<AddNewDoctor />} />
         <Route path="/admin/addnew" element={<AddNewAdmin />} />
